@@ -7,43 +7,409 @@
 /*
   My code
 */
+const Point = (x, y) => {
+  return ({x : x, y : y});
+}
+powerCurveData = [
+{x : 2, y : 2},
+{x : 2, y : 2},
+{x : 4, y : 3},
+{x : 4, y : 3},
+{x : 3, y : 3},
+{x : 3, y : 3},
+{x : 2, y : 1.5},
+{x : 1, y : 1.5},
+{x : 5, y : 4.5},
+{x : 2, y : 1.5},
+{x : 4, y : 3.5},
+{x : 4, y : 3.5},
+{x : 3, y : 2.5},
+{x : 3, y : 2.5},
+{x : 2, y : 3},
+{x : 2, y : 3},
+{x : 1, y : 1.5},
+{x : 1, y : 1.5},
+{x : 1, y : 1.5},
+{x : 1, y : 1.5},
+{x : 3, y : 3},
+{x : 3, y : 3},
+{x : 3, y : 3},
+{x : 2, y : 2.5},
+{x : 2, y : 2.5},
+{x : 4, y : 3},
+{x : 4, y : 3},
+{x : 5, y : 4.5},
+{x : 5, y : 4.5},
+{x : 3, y : 3.5},
+{x : 3, y : 3.5},
+{x : 1, y : 1.5},
+{x : 1, y : 1.5},
+{x : 3, y : 1.5},
+{x : 1, y : 1.5},
+{x : 3, y : 2.5},
+{x : 2, y : 2.5},
+{x : 2, y : 1.5},
+{x : 3, y : 3},
+{x : 3, y : 3},
+{x : 2, y : 1.5},
+{x : 2, y : 1.5},
+{x : 6, y : 9},
+{x : 4, y : 4},
+{x : 4, y : 4},
+{x : 4, y : 5.5},
+{x : 3, y : 2.5},
+{x : 3, y : 2.5},
+{x : 1, y : 1.5},
+{x : 4, y : 3},
+{x : 4, y : 3},
+{x : 3, y : 1.5},
+{x : 5, y : 6.5},
+{x : 3, y : 3},
+{x : 1, y : 1.5},
+{x : 1, y : 1.5},
+{x : 2, y : 1.5},
+{x : 3, y : 3},
+{x : 3, y : 3},
+{x : 3, y : 3},
+{x : 2, y : 3},
+{x : 1, y : 0.5},
+{x : 1, y : 0.5},
+{x : 4, y : 3.5},
+{x : 4, y : 3.5},
+{x : 3, y : 4.5},
+{x : 3, y : 2.5},
+{x : 1, y : 1.5},
+{x : 2, y : 3},
+{x : 2, y : 2.5},
+{x : 3, y : 2},
+{x : 3, y : 2},
+{x : 4, y : 4.5},
+{x : 4, y : 4.5},
+{x : 4, y : 4.5},
+{x : 3, y : 1.5},
+{x : 1, y : 1.5},
+{x : 1, y : 1.5},
+{x : 5, y : 4.5},
+{x : 5, y : 4.5},
+{x : 4, y : 4},
+{x : 2, y : 2.5},
+{x : 2, y : 2.5},
+{x : 2, y : 2.5},
+{x : 2, y : 2.5},
+{x : 3, y : 3},
+{x : 6, y : 8},
+{x : 1, y : 1.5},
+{x : 4, y : 4},
+{x : 4, y : 4},
+{x : 2, y : 3},
+{x : 5, y : 4.5},
+{x : 1, y : 1.5},
+{x : 3, y : 3.5},
+{x : 3, y : 3.5},
+{x : 3, y : 3.5},
+{x : 3, y : 3},
+{x : 2, y : 2.5},
+{x : 2, y : 2.5},
+{x : 1, y : 1.5},
+{x : 7, y : 6},
+{x : 7, y : 6},
+{x : 9, y : 7},
+{x : 9, y : 7},
+{x : 6, y : 5},
+{x : 8, y : 16.5},
+{x : 6, y : 8},
+{x : 6, y : 8},
+{x : 6, y : 9},
+{x : 7, y : 6},
+{x : 7, y : 6},
+{x : 9, y : 7},
+{x : 9, y : 7},
+{x : 6, y : 5},
+{x : 8, y : 16.5},
+{x : 6, y : 8},
+{x : 6, y : 8},
+{x : 6, y : 9},
+//eldrazi
+{x : 9, y : 14.5},
+{x : 7, y : 9.5},
+{x : 8, y : 14},
+{x : 6, y : 7.5},
+{x : 6, y : 9},
+{x : 10, y : 15},
+{x : 8, y : 12.5},
+{x : 6, y : 9},
+{x : 7, y : 11},
+{x : 10, y : 15},
+{x : 6, y : 7.5},
+{x : 9, y : 15.5},
+{x : 6, y : 7.5},
+{x : 6, y : 4.5},
+{x : 6, y : 8.5},
+{x : 9, y : 14.5},
+{x : 9, y : 14.5},
+{x : 9, y : 14.5},
+{x : 6, y : 7},
+{x : 6, y : 9},
+{x : 9, y : 14.5},
+{x : 12, y : 16.5},
+{x : 8, y : 12},
+{x : 8, y : 8},
+{x : 10, y : 10.5},
+{x : 8, y : 7.5},
+{x : 9, y : 8.5},
+{x : 8, y : 8},
+{x : 13, y : 19.5},
+{x : 8, y : 6},
+{x : 8, y : 7},
+{x : 9, y : 8.5},
+{x : 8, y : 6.5},
+{x : 7, y : 5},
+{x : 11, y : 14},
+{x : 7, y : 8},
+{x : 9, y : 14.5},
+{x : 9, y : 14.5},
+{x : 15, y : 22.5},
+{x : 10, y : 18},
+{x : 11, y : 15},
+{x : 8, y : 12},
+{x : 15, y : 16},
+
+];
+console.log(powerCurveData)
+const mtg = require('mtgsdk');
+let nameQuery = '';
+
+const isolateAbilities = cardDescription => {
+
+}
+
+const calculatePower = card => {
+  let cost = card.cmc;
+  let strength = card.power;
+  let power = strength/cost;
+  console.log(power, cost, strength)
+  return power;
+}
+
+const addCards = (query, append) => {
+  let addCard = card => {
+    numOfCards = $('#cards-holder').children().length;
+        index = numOfCards + 1;
+        console.log(card);
+        if(card.imageUrl){
+          $('#cards-holder').append(`
+              <div id='card-holder-${index}' data-toggle='modal' data-target='#modal${index}' class='card-holder'>
+                <img class='mtg-card' src=${card.imageUrl}>
+            </div>
+          `);
+        }
+        $("#modal-holder").append(`
+     <div id="modal${index}" class="modal fade" role="dialog">
+          <div class="modal-content">
+                <div class='modal-dialog'>
+                  <div class="modal-header">
+                  <h4 class="modal-title"><strong>${card.name}</strong></h4>
+                  <p> power to cost ratio: ${calculatePower(card)}</p>
+                  </div>
+                    <div class='container-fluid d-flex justify-content-sm-between'>
+                      <div class='col-lg-1 img-holder'>
+                        col1
+                        <img class='modal-card-img img-responsive' id="img-${index}" src='${card.imageUrl}'>
+                      </div>
+                      <div class='col-lg-10 chart-container'>
+                        col3
+                        <canvas class='chart img-responsive' id="chart${index}"></canvas>
+                      </div>
+                  </div>
+          </div>
+          <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+    </div>
+  </div>
+        `);
+      let chart = new Chart(
+    $(`#chart${index}`).get(0).getContext('2d'), {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            pointHitRadius: 10,
+            pointBackgroundColor: 'red',
+            pointBorderColor: 'black',
+            label: 'card name',
+            backgroundColor: 'red',
+            data: [{
+              x: 1,
+              y: 1
+            }, {
+              x: 2,
+              y: 2
+            }]
+        },
+        {
+            pointBackgroundColor: 'grey',
+            label: 'average',
+            data: powerCurveData
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        responsive:true,
+        xAxisID: 'Mana Cost',
+        scales: {
+            xAxes: [{
+                type: 'linear',
+            }]
+        }
+    }
+  });
+    chart.canvas.parentNode.style.height = '400px';
+    chart.canvas.parentNode.style.width = '400px';
+    }
+    //clear cards and last modals 
+    if(!append){
+      $('#cards-holder').html(' ');
+      $('#modal-holder').html(' ');
+    }
+    $('#more-cards-elm').remove();
+    query.page = 50;
+    query.pageSize = 100;
+    query.rarity = 'Rare';
+    console.log(query)
+    mtg.card.where(query)
+    .then(cards => {
+      let numOfCards = $('#cards-holder').children().length;
+      let index;
+      //get cards to show and append them to page
+      cards.forEach(card => {
+        addCard(card);
+      });
+      //if none come up try searching without the color mods
+      if(cards.length < 1) {
+        mtg.card.where({name : nameQuery})
+        .then(cards => {
+          //get cards to show and append them to page
+          cards.forEach(card => {
+            addCard(card);
+          });
+        });
+      }
+      addMoreCardsElm(query);
+    });
+
+}
+
+const addMoreCardsElm = query => {
+  $('#cards-holder').append(`
+    <div id='more-cards-elm'>
+     <i class="fas fa-plus fa-5x" id='plus-icon'></i>
+    </div>
+  `);
+    $('#more-cards-elm').on('click', () => { 
+      addCards(query, true);
+    });
+}
 
 function setCheckbox(elem){
-        if($(elem).is(':checked')){
-         $(elem).prev('.custom-checkbox').addClass('checked');
+    if($(elem).is(':checked')){
+        $(elem).prev('.custom-checkbox').addClass('checked');
     }else{
        $(elem).prev('.custom-checkbox').removeClass('checked');
     }
 }
 
-$(document).ready(() => {
-  const mtg = require('mtgsdk')
-
-  mtg.card.where({ subtypes: 'sliver' })
-  .then(cards => {
-    cards.forEach((card, i) => {
-      if(card.imageUrl){
-        $('#cards-holder').append(`
-          <div class='card-holder'>
-            <img class='card' src=${card.imageUrl}>
-          </div>
-        `);
-      }
-    });
+ $(window).on('load',function() {
+    let scatterChart = new Chart(
+    $('#myChart').get(0).getContext('2d'), {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            pointHitRadius: 10,
+            pointBackgroundColor: 'red',
+            pointBorderColor: 'black',
+            label: 'card name',
+            backgroundColor: 'red',
+            data: [{
+              x: 1,
+              y: 1
+            }, {
+              x: 2,
+              y: 2
+            }]
+        },
+        {
+            pointBackgroundColor: 'grey',
+            label: 'average',
+            data: powerCurveData
+        }]
+    },
+    options: {
+        responsive:false,
+        xAxisID: 'Mana Cost',
+        scales: {
+            xAxes: [{
+                type: 'linear',
+                position: 'bottom'
+            }]
+        }
+    }
   });
-
+ });
+$(document).ready(() => {
+ 
+  $('.checkbox').prop('checked', true);
+  addCards({colors: '', subtypes: 'sliver'});
   // apply custom checkbox on page ready
   $('input[type="checkbox"]').before('<span class="custom-checkbox">');
   $('input[type="checkbox"]').each(function(){
       setCheckbox($(this));
     });
+$('#input').on('click', () => {
+    //make new request and show it on page
+    nameQuery = $('#searchField').val();
+    console.log(nameQuery);
+    let query = {colors: '', name: nameQuery};
+    let colorsSelected = [];
+    if($('#redCheckbox').is(':checked')) {
+     colorsSelected.push('red') 
+    } if($('#blueCheckbox').is(':checked')) { 
+     colorsSelected.push('blue') 
+    } if($('#greenCheckbox').is(':checked')) { 
+       colorsSelected.push('green') 
+    } if($('#blackCheckbox').is(':checked')) { 
+      colorsSelected.push('black') 
+    } if($('#whiteCheckbox').is(':checked')) { 
+     colorsSelected.push('white') 
+    }
+    query.colors = colorsSelected.join('|');
+    console.log(query)
+    addCards(query);
 });
-
+$('.checkbox').on('click', () => {
+    nameQuery = $('#searchField').val();
+    $('#cards-holder').html(' ');
+    //make new request and show it on page
+    let query = {colors: '', name: nameQuery};
+    let colorsSelected = [];
+    if($('#redCheckbox').is(':checked')) {
+     colorsSelected.push('red') 
+    } if($('#blueCheckbox').is(':checked')) { 
+     colorsSelected.push('blue') 
+    } if($('#greenCheckbox').is(':checked')) { 
+       colorsSelected.push('green') 
+    } if($('#blackCheckbox').is(':checked')) { 
+      colorsSelected.push('black') 
+    } if($('#whiteCheckbox').is(':checked')) { 
+     colorsSelected.push('white') 
+    }
+    query.colors = colorsSelected.join('|');
+    addCards(query);
+});
   // on input change, change custom checkbox 
   $('body').on('change', 'input[type="checkbox"]', function(){
     setCheckbox($(this));
-
   });
+});
 /*
   My code
 */

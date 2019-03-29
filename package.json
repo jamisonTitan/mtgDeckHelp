@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^2.8.0",
     "debug": "^4.1.1",
     "mtgsdk": "^0.4.2"
   }
