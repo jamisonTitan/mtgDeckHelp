@@ -19,9 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    <script src='bundle.js'></script>
-
+    <script src="bundle.js"></script>
     <link rel="stylesheet" href="styles.css" type="text/css">
   </head>
   <body>
@@ -71,6 +69,39 @@
   </div>
   <div id='cards-holder'></div>
   <div id='modal-holder'></div>
+    </div>
+  </div>
+
+  <div id="modal${index}" class="modal fade" role="dialog">
+          <div class="modal-content">
+                <div class='modal-dialog'>
+                  <div class="modal-header">
+                  <h4 class="modal-title"><strong>${card.name}</strong></h4>
+                  <p> power to cost ratio: ${calculatePower(card)}</p>
+                  </div>
+                  <div class='container-fluid'>
+                    <div class='row'>{name : nameQuery}
+                      <div class='col'>
+                        <div class='container-fluid d-flex justify-content-sm-between'>
+                          <div class='col-lg-1 img-holder'>
+                            col1
+                            <img class='modal-card-img img-responsive' id="img-${index}" src='${card.imageUrl}'>
+                          </div>
+                          <div class='col-lg-10 chart-container'>
+                            col3
+                            <canvas class='chart img-responsive' id="chart${index}"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                      <div class='col'>
+
+                      </div>
+                    </div>
+                  </div>
+          </div>
+          <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
     </div>
   </div>
 

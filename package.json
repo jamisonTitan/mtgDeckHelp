@@ -11,6 +11,8 @@
   "dependencies": {
     "chart.js": "^2.8.0",
     "debug": "^4.1.1",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
     "mtgsdk": "^0.4.2"
   }
 }
