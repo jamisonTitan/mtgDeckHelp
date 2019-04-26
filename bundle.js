@@ -16,11 +16,8 @@ $.getJSON('mtg-power-averages.json', data => {
   });
 console.log(powerCurveData);
 const mtg = require('mtgsdk');
-let nameQuery = '';
-
-const isolateAbilities = cardDescription => {
-
-}
+let nameToQuery = '';
+let rarityToQuery = '';
 
 const calculatePower = card => {
   let avg = (parseInt(card.power, 10) + parseInt(card.toughness, 10) / 2);
@@ -29,29 +26,29 @@ const calculatePower = card => {
 
 const addCards = (query, append) => {
   if(!query) {
-    nameQuery = $('#searchField').val();
-    console.log(nameQuery);
-    query = {colors: '', name: nameQuery};
+    rarityToQuery = $('#rarity-btn').innerText; console.log(rarityToQuery + '= rarity');
+    nameToQuery = $('#searchField').val();
+    console.log(nameToQuery);
+    query = {colors: '', name: nameToQuery, rarity: rarityToQuery};
     let colorsSelected = [];
     if($('#redCheckbox').is(':checked')) {
-     colorsSelected.push('red') 
+      colorsSelected.push('red') 
     } if($('#blueCheckbox').is(':checked')) { 
-     colorsSelected.push('blue') 
+      colorsSelected.push('blue') 
     } if($('#greenCheckbox').is(':checked')) { 
-       colorsSelected.push('green') 
+      colorsSelected.push('green') 
     } if($('#blackCheckbox').is(':checked')) { 
       colorsSelected.push('black') 
     } if($('#whiteCheckbox').is(':checked')) { 
-     colorsSelected.push('white') 
+      colorsSelected.push('white') 
     }
     query.colors = colorsSelected.join('|');
-    console.log(query)
+    console.log(query);
   }
   let addCard = card => {
     numOfCards = $('#cards-holder').children().length;
         index = numOfCards + 1;
-        console.log(card);
-        if(card.imageUrl){
+        if(card.imageUrl){ //only append if it has an img to show
           $('#cards-holder').append(`
               <div id='card-holder-${index}' data-toggle='modal' data-target='#modal${index}' class='card-holder'>
                 <img class='mtg-card' src=${card.imageUrl}>
@@ -59,50 +56,51 @@ const addCards = (query, append) => {
           `);
         }
         $("#modal-holder").append(`
-     <div id="modal${index}" class="modal fade" role="dialog">
-          <div class="modal-content">
-                <div class='modal-dialog'>
-                  <div class="modal-header">
-                  <h4 class="modal-title"><strong>${card.name}</strong></h4>
-                  </div>
-                    <div class='container-fluid d-flex '>
-                      <div class='col-lg-10 img-holder'>
-                        <img class='modal-card-img img-responsive' id="img-${index}" src='${card.imageUrl}'>
+         <div id="modal${index}" class="modal fade" role="dialog">
+              <div class="modal-content">
+                    <div class='modal-dialog'>
+                      <div class="modal-header">
+                      <h4 class="modal-title"><strong>${card.name}</strong></h4>
                       </div>
-                      <div class='col-lg-10 chart-container'>
-                        <canvas class='chart img-responsive' id="chart${index}"></canvas>
+                        <div class='container-fluid d-flex '>
+                          <div class='col-lg-10 img-holder'>
+                            <img class='modal-card-img img-responsive' id="img-${index}" src='${card.imageUrl}'>
+                          </div>
+                          <div class='col-lg-10 chart-container'>
+                            <canvas class='chart img-responsive' id="chart${index}"></canvas>
+                          </div>
+                          <div class='col-lg-10' class='card-desc'>
+                            <p>bloobloobloobloobloobloobloobloobloo</p>
+                            <ul>
+                              <li>
+                                power to cost ratio: ${calculatePower(card)}
+                              </li>
+                              <li>
+                                ${card.flavor}
+                              </li>
+                              <li>
+                                power:${card.power}/toughness${card.toughness}
+                              </li>
+                              <li>
+                                bloobloobl
+                              </li><li>
+                                bloobloobl
+                              </li><li>
+                                bloobloobl
+                              </li><li>
+                                bloobloobl
+                              </li>
+                            </ul>
+                          </div>
                       </div>
-                      <div class='col-lg-10' class='card-desc'>
-                        <p>bloobloobloobloobloobloobloobloobloo</p>
-                        <ul>
-                          <li>
-                            power to cost ratio: ${calculatePower(card)}
-                          </li>
-                          <li>
-                            ${card.flavor}
-                          </li>
-                          <li>
-                            power:${card.power}/toughness${card.toughness}
-                          </li>
-                          <li>
-                            bloobloobl
-                          </li><li>
-                            bloobloobl
-                          </li><li>
-                            bloobloobl
-                          </li><li>
-                            bloobloobl
-                          </li>
-                        </ul>
-                      </div>
-                  </div>
-          </div>
-          <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-    </div>
-  </div>
+              </div>
+              <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+        </div>
+      </div>
         `);
+        
       let chart = new Chart(
     $(`#chart${index}`).get(0).getContext('2d'), {
     type: 'scatter',
@@ -149,9 +147,8 @@ const addCards = (query, append) => {
     }
     query.page = Math.floor(Math.random() * 20) + 10;
     query.pageSize = 100;
-    query.rarity = 'uncommon'; //TODO make rarity dynamic
+    query.rarity = rarityToQuery;
     query.contains = 'imageUrl';
-    console.log(query)
     mtg.card.where(query)
     .then(cards => {
       //get cards to show and append them to page
@@ -160,7 +157,7 @@ const addCards = (query, append) => {
       });
       //if none come up try searching without the color mods
       if(cards.length < 1) {
-        mtg.card.where({name : nameQuery})
+        mtg.card.where({name : nameToQuery, rarity: rarityToQuery})
         .then(cards => {
           //get cards to show and append them to page
           cards.forEach(card => {
@@ -193,6 +190,10 @@ function setCheckbox(elem){
 }
 
 $(document).ready(() => {
+   $('.rarity-dropdown-item').on('click', (event) => {
+    let text = (event.target.innerText === 'all') ? 'rarity' : event.target.innerText; 
+    $('#rarity-btn').html(text);
+   });
  
   $('.checkbox').prop('checked', true);
   addCards({colors: '', subtypes: 'sliver'});
@@ -212,6 +213,7 @@ $('.checkbox').on('click', () => {
     setCheckbox($(this));
   });
 });
+
 /*
   My code
 */

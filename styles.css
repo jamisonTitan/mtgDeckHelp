@@ -115,7 +115,7 @@ body {
   padding-top:50%;
   width: 40%;
 }
-input[type="checkbox"] + label {
+input.checkbox[type="checkbox"] + label {
 	box-shadow: 2px 2px 5px grey;
 	border-radius: 50%;
 	border: 2px solid gray;
@@ -125,7 +125,7 @@ input[type="checkbox"] + label {
     background-position: 5px 5px;
     background-repeat: no-repeat;
 }
-input[type="checkbox"]:checked + label {
+input.checkbox[type="checkbox"]:checked + label {
 	border-radius: 50%;
 	border: 2px solid blue;
 	width:64px;

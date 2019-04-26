@@ -14,6 +14,8 @@
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   	
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  	
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -60,50 +62,36 @@
           </div>
         </div>
         </div>
-          <div class='rarity-filters'>
-
+        
+        <div id='dropdown-holder'>
+          <div class="btn-group">
+            <button id='rarity-btn' type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Rarity
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button class="dropdown-item rarity-dropdown-item" type="button">all</button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item rarity-dropdown-item" type="button">common</button>
+              <button class="dropdown-item rarity-dropdown-item" type="button">uncommon</button>
+              <button class="dropdown-item rarity-dropdown-item" type="button">rare</button>
+              <button class="dropdown-item rarity-dropdown-item" type="button">mythic</button>
+            </div>
+          </div>
+          
+          <div class="btn-group">
+            <button id='set-btn' type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Set
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <button class="dropdown-item" type="button">Action</button>
+              <button class="dropdown-item" type="button">Another action</button>
+              <button class="dropdown-item" type="button">Something else here</button>
+            </div>
           </div>
         </div>
     	</div>
     </div>
-  </div>
   <div id='cards-holder'></div>
   <div id='modal-holder'></div>
-    </div>
-  </div>
-
-  <div id="modal${index}" class="modal fade" role="dialog">
-          <div class="modal-content">
-                <div class='modal-dialog'>
-                  <div class="modal-header">
-                  <h4 class="modal-title"><strong>${card.name}</strong></h4>
-                  <p> power to cost ratio: ${calculatePower(card)}</p>
-                  </div>
-                  <div class='container-fluid'>
-                    <div class='row'>{name : nameQuery}
-                      <div class='col'>
-                        <div class='container-fluid d-flex justify-content-sm-between'>
-                          <div class='col-lg-2 img-holder'>
-                            col1
-                            <img class='modal-card-img ' id="img-${index}" src='${card.imageUrl}'>
-                          </div>
-                          <div class='col-lg-9 chart-container'>
-                            col3
-                            <canvas class='chart img-responsive' id="chart${index}"></canvas>
-                          </div>
-                        </div>
-                      </div>
-                      <div class='col'>
-
-                      </div>
-                    </div>
-                  </div>
-          </div>
-          <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-    </div>
-  </div>
-
   </body>
 </html>
