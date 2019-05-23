@@ -8,6 +8,8 @@
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
     
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
     <title>MTG deckhelper</title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -26,15 +28,18 @@
   </head>
   <body>
 
-  <div class="page-header" id='title'>
-  	<h1><strong>Mtg Deck Helper</strong></h1>
+  <div class="page-header header" id='title'>
+    <h1><strong>Magic The gathering</strong></h1>
   </div>
+  <div class="page-subheader subheader">
+    <h2>Deck building helper</h2>
+  </div>
+  <hr>
   <div id='search'>
   	<input id='searchField' type='text' placeholder="search">
   	<button id='input'>go</button>
   </div>
   <div id='filters'>
-  	<div class='jumbotron'>
       <div class="d-flex justify-content-left">
         <div class='checkboxes d-flex justify-content-left'>
           <div class='color-filters'>
@@ -66,7 +71,7 @@
         <div id='dropdown-holder'>
           <div class="btn-group">
             <button id='rarity-btn' type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Rarity
+            Rarity
             </button>
             <div class="dropdown-menu dropdown-menu-right">
               <button class="dropdown-item rarity-dropdown-item" type="button">all</button>
@@ -78,18 +83,18 @@
             </div>
           </div>
           
-          <div class="btn-group">
+          <div class="btn-group dropright">
             <button id='set-btn' type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Set
             </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <button class="dropdown-item" type="button">Action</button>
-              <button class="dropdown-item" type="button">Another action</button>
-              <button class="dropdown-item" type="button">Something else here</button>
-            </div>
+            <ul class="set-dropdown-menu scrollable dropdown-menu">
+              <li>
+              <button class="dropdown-item set-dropdown-item" type="button">all</button>
+              <div class="dropdown-divider"></div>
+              </li>
+            </ul>
           </div>
         </div>
-    	</div>
     </div>
   <div id='cards-holder'></div>
   <div id='modal-holder'></div>

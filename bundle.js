@@ -8,7 +8,460 @@
   My code
 */
 //Get power curve data from json file
+const setNames = [
+  "Tenth Edition",
+  "Unlimited Edition",
+  "Revised Edition",
+  "Fourth Edition Foreign Black Border",
+  "Fourth Edition",
+  "Fifth Dawn",
+  "Fifth Edition",
+  "Classic Sixth Edition",
+  "Seventh Edition",
+  "Eighth Edition",
+  "Ninth Edition",
+  "Masters 25",
+  "Aether Revolt",
+  "Amonkhet",
+  "Shards of Alara",
+  "Alliances",
+  "Arena New Player Experience",
+  "Apocalypse",
+  "Alara Reborn",
+  "Archenemy",
+  "Arabian Nights",
+  "Anthologies",
+  "Antiquities",
+  "Avacyn Restored",
+  "Battlebond",
+  "Battle for Zendikar",
+  "Born of the Gods",
+  "Betrayers of Kamigawa",
+  "Battle Royale Box Set",
+  "Beatdown Box Set",
+  "Commander 2013",
+  "Commander 2014",
+  "Commander 2015",
+  "Commander 2016",
+  "Commander 2017",
+  "Commander 2018",
+  "CollectorsΓÇÖ Edition",
+  "Intl. CollectorsΓÇÖ Edition",
+  "Champions of Kamigawa",
+  "Chronicles",
+  "Commander's Arsenal",
+  "Commander Anthology Volume II",
+  "Commander Anthology",
+  "Commander 2011",
+  "Conspiracy: Take the Crown",
+  "Conspiracy",
+  "Conflux",
+  "Magic 2015 Clash Pack",
+  "Fate Reforged Clash Pack",
+  "Magic Origins Clash Pack",
+  "Coldsnap",
+  "Coldsnap Theme Decks",
+  "Duel Decks: Elves vs. Goblins",
+  "Duel Decks: Jace vs. Chandra",
+  "Duel Decks: Divine vs. Demonic",
+  "Duel Decks: Garruk vs. Liliana",
+  "Duel Decks: Phyrexia vs. the Coalition",
+  "Duel Decks: Elspeth vs. Tezzeret",
+  "Duel Decks: Knights vs. Dragons",
+  "Duel Decks: Ajani vs. Nicol Bolas",
+  "Duel Decks: Venser vs. Koth",
+  "Duel Decks: Izzet vs. Golgari",
+  "Duel Decks: Sorin vs. Tibalt",
+  "Duel Decks: Heroes vs. Monsters",
+  "Duel Decks: Jace vs. Vraska",
+  "Duel Decks: Speed vs. Cunning",
+  "Duel Decks: Elspeth vs. Kiora",
+  "Duel Decks: Zendikar vs. Eldrazi",
+  "Duel Decks: Blessed vs. Cursed",
+  "Duel Decks: Nissa vs. Ob Nixilis",
+  "Duel Decks: Mind vs. Might",
+  "Duel Decks: Merfolk vs. Goblins",
+  "Duel Decks: Elves vs. Inventors",
+  "Dragon's Maze",
+  "Dissension",
+  "Dark Ascension",
+  "Deckmasters",
+  "Dominaria",
+  "Duels of the Planeswalkers",
+  "From the Vault: Dragons",
+  "The Dark",
+  "Darksteel",
+  "Dragons of Tarkir",
+  "Duel Decks Anthology: Divine vs. Demonic",
+  "Archenemy: Nicol Bolas",
+  "Explorers of Ixalan",
+  "Judge Gift Cards 2000",
+  "Eternal Masters",
+  "Eldritch Moon",
+  "Eventide",
+  "Duel Decks Anthology: Elves vs. Goblins",
+  "Exodus",
+  "Zendikar Expeditions",
+  "Friday Night Magic 2001",
+  "Friday Night Magic 2002",
+  "Friday Night Magic 2003",
+  "Friday Night Magic 2004",
+  "Friday Night Magic 2005",
+  "Friday Night Magic 2006",
+  "Friday Night Magic 2007",
+  "Friday Night Magic 2008",
+  "Friday Night Magic 2009",
+  "Friday Night Magic 2010",
+  "Friday Night Magic 2011",
+  "Friday Night Magic 2012",
+  "Friday Night Magic 2013",
+  "Friday Night Magic 2014",
+  "Friday Night Magic 2015",
+  "Friday Night Magic 2016",
+  "Friday Night Magic 2017",
+  "Friday Night Magic 2018",
+  "Foreign Black Border",
+  "Fallen Empires",
+  "Friday Night Magic 2000",
+  "Fate Reforged",
+  "Future Sight",
+  "Judge Gift Cards 2001",
+  "Judge Gift Cards 2002",
+  "Judge Gift Cards 2003",
+  "Judge Gift Cards 2004",
+  "Judge Gift Cards 2005",
+  "Judge Gift Cards 2006",
+  "Judge Gift Cards 2007",
+  "Judge Gift Cards 2008",
+  "Judge Gift Cards 2009",
+  "Judge Gift Cards 2010",
+  "Judge Gift Cards 2011",
+  "2017 Gift Pack",
+  "M19 Gift Pack",
+  "Judge Gift Cards 1999",
+  "GRN Guild Kit",
+  "RNA Guild Kit",
+  "Game Night",
+  "Guildpact",
+  "Guilds of Ravnica",
+  "Global Series Jiang Yanggu & Mu Yanling",
+  "Gatecrash",
+  "Duel Decks Anthology: Garruk vs. Liliana",
+  "Premium Deck Series: Slivers",
+  "HasCon 2017",
+  "Happy Holidays",
+  "Homelands",
+  "Planechase",
+  "Hour of Devastation",
+  "2016 Heroes of the Realm",
+  "2017 Heroes of the Realm",
+  "Ice Age",
+  "Iconic Masters",
+  "Magic Player Rewards 2011",
+  "Invasion",
+  "Innistrad",
+  "Introductory Two-Player Set",
+  "Judge Gift Cards 2012",
+  "Judge Gift Cards 2013",
+  "Judge Gift Cards 2014",
+  "Judge Gift Cards 2015",
+  "Judge Gift Cards 2016",
+  "Judge Gift Cards 2017",
+  "Judge Gift Cards 2018",
+  "Judge Gift Cards 2019",
+  "Judge Gift Cards 1998",
+  "Journey into Nyx",
+  "Judgment",
+  "Duel Decks Anthology: Jace vs. Chandra",
+  "Kaladesh",
+  "Khans of Tarkir",
+  "League Tokens 2012",
+  "League Tokens 2013",
+  "League Tokens 2014",
+  "League Tokens 2015",
+  "League Tokens 2016",
+  "League Tokens 2017",
+  "Limited Edition Alpha",
+  "Limited Edition Beta",
+  "Legends",
+  "Legions",
+  "Lorwyn",
+  "Magic 2010",
+  "Magic 2011",
+  "Magic 2012",
+  "Magic 2013",
+  "Magic 2014",
+  "Magic 2015",
+  "Core Set 2019",
+  "Mirrodin Besieged",
+  "Modern Event Deck 2014",
+  "Masters Edition",
+  "Masters Edition II",
+  "Masters Edition III",
+  "Masters Edition IV",
+  "Mythic Edition",
+  "Multiverse Gift Box",
+  "Modern Horizons",
+  "Mirage",
+  "Modern Masters 2015",
+  "Modern Masters 2017",
+  "Modern Masters",
+  "Mercadian Masques",
+  "Morningtide",
+  "Amonkhet Invocations",
+  "Magic Player Rewards 2001",
+  "Kaladesh Inventions",
+  "Mirrodin",
+  "Nemesis",
+  "New Phyrexia",
+  "Archenemy Schemes",
+  "Commander 2013 Oversized",
+  "Commander 2014 Oversized",
+  "Commander 2015 Oversized",
+  "Commander 2016 Oversized",
+  "Commander 2017 Oversized",
+  "Commander 2018 Oversized",
+  "Commander's Arsenal Oversized",
+  "Commander 2011 Oversized",
+  "Odyssey",
+  "Archenemy: Nicol Bolas Schemes",
+  "Oath of the Gatewatch",
+  "Planechase Planes",
+  "Legacy Championship",
+  "Onslaught",
+  "Planechase 2012 Planes",
+  "Planechase Anthology Planes",
+  "Magic Origins",
+  "Vintage Championship",
+  "Portal Second Age",
+  "Magic Player Rewards 2003",
+  "Magic Player Rewards 2004",
+  "Magic Player Rewards 2005",
+  "Magic Player Rewards 2006",
+  "Magic Player Rewards 2007",
+  "Magic Player Rewards 2008",
+  "Magic Player Rewards 2009",
+  "Magic Player Rewards 2010",
+  "Tenth Edition Promos",
+  "15th Anniversary Cards",
+  "Two-Headed Giant Tournament",
+  "Aether Revolt Promos",
+  "Amonkhet Promos",
+  "Arena League 2000",
+  "Arena League 2001",
+  "Arena League 2002",
+  "Arena League 2003",
+  "Arena League 2004",
+  "Arena League 2005",
+  "Arena League 2006",
+  "Arena League 1999",
+  "Asia Pacific Land Program",
+  "MTG Arena Promos",
+  "Promotional Schemes",
+  "Arena League 1996",
+  "Avacyn Restored Promos",
+  "Battlebond Promos",
+  "Battle for Zendikar Promos",
+  "Born of the Gods Promos",
+  "Miscellaneous Book Promos",
+  "Planechase 2012",
+  "Planechase Anthology",
+  "Celebration Cards",
+  "Commander 2011 Launch Party",
+  "Champs and States",
+  "Prophecy",
+  "Premium Deck Series: Fire and Lightning",
+  "Premium Deck Series: Graveborn",
+  "Dragon's Maze Promos",
+  "Dark Ascension Promos",
+  "Dominaria Promos",
+  "Duels of the Planeswalkers Promos 2010",
+  "Duels of the Planeswalkers Promos 2011",
+  "Duels of the Planeswalkers Promos 2012",
+  "Duels of the Planeswalkers Promos 2013",
+  "Duels of the Planeswalkers Promos 2014",
+  "Dragon Con",
+  "Dragons of Tarkir Promos",
+  "Duels of the Planeswalkers Promos 2009",
+  "European Land Program",
+  "Eldritch Moon Promos",
+  "MagicFest 2019",
+  "Fate Reforged Promos",
+  "Gateway 2007",
+  "Gateway 2008",
+  "Grand Prix Promos",
+  "Guilds of Ravnica Promos",
+  "Guru",
+  "Gatecrash Promos",
+  "Gateway 2006",
+  "Open the Helvault",
+  "Hobby Japan Promos",
+  "Promotional Planes",
+  "Hour of Devastation Promos",
+  "HarperPrism Book Promos",
+  "Hachette UK",
+  "IDW Comics 2013",
+  "IDW Comics 2014",
+  "IDW Comics 2012",
+  "Innistrad Promos",
+  "Junior APAC Series",
+  "Japan Junior Tournament",
+  "Journey into Nyx Promos",
+  "Junior Series Europe",
+  "Kaladesh Promos",
+  "Khans of Tarkir Promos",
+  "Planar Chaos",
+  "DCI Legend Membership",
+  "2018 Lunar New Year",
+  "Launch Parties",
+  "Planeshift",
+  "Magic 2010 Promos",
+  "Magic 2011 Promos",
+  "Magic 2012 Promos",
+  "Magic 2013 Promos",
+  "Magic 2014 Promos",
+  "Magic 2015 Promos",
+  "Core Set 2019 Promos",
+  "Mirrodin Besieged Promos",
+  "Magazine Inserts",
+  "Magic Online Avatars",
+  "Magic Premiere Shop 2005",
+  "Magic Premiere Shop 2006",
+  "Magic Premiere Shop 2007",
+  "Magic Premiere Shop 2008",
+  "Magic Premiere Shop 2009",
+  "Magic Premiere Shop 2010",
+  "Magic Premiere Shop 2011",
+  "Nationals Promos",
+  "New Phyrexia Promos",
+  "Oath of the Gatewatch Promos",
+  "Portal",
+  "Magic Origins Promos",
+  "M15 Prerelease Challenge",
+  "Portal Demo Game",
+  "Prerelease Events",
+  "Pro Tour Promos",
+  "Magic Player Rewards 2002",
+  "Redemption Program",
+  "Release Events",
+  "Resale Promos",
+  "Rivals of Ixalan Promos",
+  "Magic Online Promos",
+  "Ravnica Allegiance Promos",
+  "Rise of the Eldrazi Promos",
+  "Return to Ravnica Promos",
+  "RNA Ravnica Weekend",
+  "GRN Ravnica Weekend",
+  "Salvat 2011",
+  "San Diego Comic-Con 2014",
+  "San Diego Comic-Con 2015",
+  "San Diego Comic-Con 2016",
+  "San Diego Comic-Con 2017",
+  "San Diego Comic-Con 2018",
+  "Salvat 2005",
+  "San Diego Comic-Con 2013",
+  "Shadows over Innistrad Promos",
+  "Scars of Mirrodin Promos",
+  "BFZ Standard Series",
+  "XLN Standard Showdown",
+  "M19 Standard Showdown",
+  "Summer of Magic",
+  "Junior Super Series",
+  "Pro Tour Collector Set",
+  "Theros Promos",
+  "Portal Three Kingdoms",
+  "Tarkir Dragonfury",
+  "Ultimate Box Topper",
+  "URL/Convention Promos",
+  "Unstable Promos",
+  "Vanguard Series",
+  "War of the Spark Promos",
+  "World Magic Cup Qualifiers",
+  "Worlds",
+  "Wizards of the Coast Online Store",
+  "Wizards Play Network 2009",
+  "Wizards Play Network 2010",
+  "Wizards Play Network 2011",
+  "Wizards Play Network 2012",
+  "Wizards Play Network 2008",
+  "Worldwake Promos",
+  "Ixalan Promos",
+  "XLN Treasure Chest",
+  "Legendary Cube",
+  "You Make the Cube",
+  "Zendikar Promos",
+  "Ravnica: City of Guilds",
+  "Renaissance",
+  "Rinascimento",
+  "Rivals of Ixalan",
+  "Time Spiral Timeshifted",
+  "Ravnica Allegiance",
+  "Rise of the Eldrazi",
+  "Rivals Quick Start Set",
+  "Return to Ravnica",
+  "Starter 2000",
+  "Starter 1999",
+  "Scourge",
+  "Shadowmoor",
+  "Shadows over Innistrad",
+  "Saviors of Kamigawa",
+  "Scars of Mirrodin",
+  "Signature Spellbook: Jace",
+  "Signature Spellbook: Gideon",
+  "Stronghold",
+  "Summer Magic / Edgar",
+  "Battle the Horde",
+  "Magic Online Theme Decks",
+  "Duel Decks: Mirrodin Pure vs. New Phyrexia",
+  "Defeat a God",
+  "Face the Hydra",
+  "Theros Hero's Path",
+  "Born of the Gods Hero's Path",
+  "Journey into Nyx Hero's Path",
+  "Theros",
+  "Tempest",
+  "Torment",
+  "Tempest Remastered",
+  "Time Spiral",
+  "Urza's Destiny",
+  "Ugin's Fate",
+  "Unglued",
+  "Urza's Legacy",
+  "Ultimate Masters",
+  "Unhinged",
+  "Urza's Saga",
+  "Unstable",
+  "From the Vault: Exiled",
+  "From the Vault: Relics",
+  "From the Vault: Legends",
+  "From the Vault: Realms",
+  "From the Vault: Twenty",
+  "From the Vault: Annihilation",
+  "From the Vault: Angels",
+  "From the Vault: Lore",
+  "From the Vault: Transform",
+  "Visions",
+  "Vintage Masters",
+  "Welcome Deck 2016",
+  "Welcome Deck 2017",
+  "War of the Spark",
+  "World Championship Decks 2000",
+  "World Championship Decks 2001",
+  "World Championship Decks 2002",
+  "World Championship Decks 2003",
+  "World Championship Decks 2004",
+  "World Championship Decks 1997",
+  "World Championship Decks 1998",
+  "World Championship Decks 1999",
+  "Weatherlight",
+  "Worldwake",
+  "Ixalan",
+  "Zendikar",
+];
+let currentSet = '';
+let page = 1;
 let powerCurveData = [];
+const sets = []
 $.getJSON('mtg-power-averages.json', data => {
     $.each(data.averages, (i, point) => {
       powerCurveData.push(point);
@@ -25,10 +478,14 @@ const calculatePower = card => {
 }
 
 const addCards = (query, append) => {
+  append ? page++ : page = 1;
   if(!query) {
-    rarityToQuery = $('#rarity-btn').innerText; console.log(rarityToQuery + '= rarity');
+    rarityToQuery = 
+      $('#rarity-btn')[0].innerText === 'Rarity ' ? '' : $('#rarity-btn')[0].innerText;
+    currentSet = 
+      $('#set-btn')[0].innerText === 'Set ' ? '' : $('#set-btn')[0].innerText;  
     nameToQuery = $('#searchField').val();
-    console.log(nameToQuery);
+    console.log($('#set-btn')[0].innerText === "Set ");
     query = {colors: '', name: nameToQuery, rarity: rarityToQuery};
     let colorsSelected = [];
     if($('#redCheckbox').is(':checked')) {
@@ -70,7 +527,6 @@ const addCards = (query, append) => {
                             <canvas class='chart img-responsive' id="chart${index}"></canvas>
                           </div>
                           <div class='col-lg-10' class='card-desc'>
-                            <p>bloobloobloobloobloobloobloobloobloo</p>
                             <ul>
                               <li>
                                 power to cost ratio: ${calculatePower(card)}
@@ -82,14 +538,15 @@ const addCards = (query, append) => {
                                 power:${card.power}/toughness${card.toughness}
                               </li>
                               <li>
-                                bloobloobl
-                              </li><li>
-                                bloobloobl
-                              </li><li>
-                                bloobloobl
-                              </li><li>
-                                bloobloobl
+                                set: ${card.setName}
                               </li>
+                              <li>
+                                rarity: ${card.rarity}
+                              </li>
+                              <li>
+                                type/race: ${card.subtypes} 
+                              </li>
+
                             </ul>
                           </div>
                       </div>
@@ -107,7 +564,7 @@ const addCards = (query, append) => {
     data: {
         datasets: [{
             pointRadius: 4,
-            pointHitRadius: 100,
+            pointHitRadius: 10,
             pointBackgroundColor: 'red',
             pointBorderColor: 'black',
             label: card.name,
@@ -131,6 +588,16 @@ const addCards = (query, append) => {
         scales: {
             xAxes: [{
                 type: 'linear',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Mana'
+                }
+            }],
+            yAxes: [{
+              scaleLabel: {
+                display:true,
+                labelString: "Power"
+              }
             }]
         }
     }
@@ -140,15 +607,23 @@ const addCards = (query, append) => {
     chart.canvas.parentNode.style.height = '400px';
     chart.canvas.parentNode.style.width = '400px';
     }
-    //clear cards and last modals 
+    //clear previous cards and modals 
     if(!append){
       $('#cards-holder').html(' ');
       $('#modal-holder').html(' ');
     }
-    query.page = Math.floor(Math.random() * 20) + 10;
+    if(append){
+      //ask api for next page of results
+      query.page =
+         page;
+    }else {
+      query.page = (Math.floor(Math.random() * 5) + 1);
+    }
+    query.setName = currentSet;
     query.pageSize = 100;
     query.rarity = rarityToQuery;
     query.contains = 'imageUrl';
+    console.log(query);
     mtg.card.where(query)
     .then(cards => {
       //get cards to show and append them to page
@@ -157,6 +632,7 @@ const addCards = (query, append) => {
       });
       //if none come up try searching without the color mods
       if(cards.length < 1) {
+        console.log('bypassed color mods');
         mtg.card.where({name : nameToQuery, rarity: rarityToQuery})
         .then(cards => {
           //get cards to show and append them to page
@@ -190,28 +666,40 @@ function setCheckbox(elem){
 }
 
 $(document).ready(() => {
+  setNames.forEach(setName => {
+    $('.set-dropdown-menu').append(`
+     <li>
+      <button class="dropdown-item set-dropdown-item" type="button">${setName}</button>
+     </li>  
+    `);
+  })
+
    $('.rarity-dropdown-item').on('click', (event) => {
-    let text = (event.target.innerText === 'all') ? 'rarity' : event.target.innerText; 
+    let text = (event.target.innerText === 'all') ? 'Rarity ' : event.target.innerText; 
     $('#rarity-btn').html(text);
    });
  
+  $('.set-dropdown-item').on('click', (event) => {
+    let text = (event.target.innerText === 'all') ? 'Set ' : event.target.innerText; 
+    $('#set-btn').html(text);
+  });
+
   $('.checkbox').prop('checked', true);
-  addCards({colors: '', subtypes: 'sliver'});
+  addCards();// add first cards
   // apply custom checkbox on page ready
   $('input[type="checkbox"]').before('<span class="custom-checkbox">');
   $('input[type="checkbox"]').each(function(){
       setCheckbox($(this));
     });
-$('#input').on('click', () => {
-    addCards();
-});
-$('.checkbox').on('click', () => {
+
+$('#input, .checkbox, .dropdown-item').on('click', () => {
     addCards();
 });
   // on input change, change custom checkbox 
   $('body').on('change', 'input[type="checkbox"]', function(){
     setCheckbox($(this));
   });
+  console.log(mtg.set);
 });
 
 /*
